@@ -47,7 +47,7 @@ struct CustomSurfaceData
     half  alpha;                // 0 for transparent materials, 1.0 for opaque.
 };
 
-struct LightingData 
+struct CustomLightingData 
 {
     Light light;
     half3 environmentLighting;
@@ -130,9 +130,9 @@ half3 EnvironmentBRDF(half3 f0, half roughness, half NdotV)
 }
 
 #ifdef CUSTOM_LIGHTING_FUNCTION
-    half4 CUSTOM_LIGHTING_FUNCTION(CustomSurfaceData surfaceData, LightingData lightingData);
+    half4 CUSTOM_LIGHTING_FUNCTION(CustomSurfaceData surfaceData, CustomLightingData lightingData);
 #else
-    half4 CUSTOM_LIGHTING_FUNCTION(CustomSurfaceData surfaceData, LightingData lightingData)
+    half4 CUSTOM_LIGHTING_FUNCTION(CustomSurfaceData surfaceData, CustomLightingData lightingData)
     {
         // 0.089 perceptual roughness is the min value we can represent in fp16
         // to avoid denorm/division by zero as we need to do 1 / (pow(perceptualRoughness, 4)) in GGX
@@ -196,7 +196,7 @@ half4 SurfaceFragment(Varyings IN) : SV_Target
     CustomSurfaceData surfaceData;
     SurfaceFunction(IN, surfaceData);
 
-    LightingData lightingData;
+    CustomLightingData lightingData;
 
     half3 viewDirectionWS = normalize(GetWorldSpaceViewDir(IN.positionWS));
     half3 reflectionDirectionWS = reflect(-viewDirectionWS, surfaceData.normalWS);

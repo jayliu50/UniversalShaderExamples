@@ -110,7 +110,7 @@
                 surfaceData.alpha = 1.0;
             }
 
-            half4 ClearCoatLightingFunction(CustomSurfaceData surfaceData, LightingData lightingData)
+            half4 ClearCoatLightingFunction(CustomSurfaceData surfaceData, CustomLightingData lightingData)
             {
                 ///////////////////////////////////////////////////////////////
                 // Parametrization                                            /
